@@ -12,4 +12,8 @@ class Oystercard
      raise "You're too wealthy, not more #{Oystercard::MAX}" if @balance + chosen_value >= MAX
      @balance + chosen_value
    end
+
+   def deduct(value)
+     @balance - value
+   end
 end
