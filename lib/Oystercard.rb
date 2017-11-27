@@ -10,7 +10,7 @@ class Oystercard
    end
 
    def top_up(chosen_value)
-     raise "You're too wealthy" if @balance + chosen_value >= MAX
-     @balance = @balance + chosen_value
+     raise "You're too wealthy, not more #{Oystercard::MAX}" if @balance + chosen_value >= MAX
+     @balance + chosen_value
    end
 end

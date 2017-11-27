@@ -14,7 +14,7 @@ describe Oystercard do
     it 'raise error if more than 90 quid' do
       card = Oystercard.new
       card.balance = 89
-      expect{ card.top_up(2) }.to raise_error "You're too wealthy"
+      expect{ card.top_up(2) }.to raise_error "You're too wealthy, not more #{Oystercard::MAX}"
     end
   end
 end
