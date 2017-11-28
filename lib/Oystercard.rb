@@ -33,7 +33,7 @@ class Oystercard
      @in_journey
    end
 
-  
+  private
 
    def deduct(value)
      @balance -= value

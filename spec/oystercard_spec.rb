@@ -18,16 +18,7 @@ describe Oystercard do
     it 'raise error if less than 1 pound' do
       expect{ oystercard.touch_in }.to raise_error "You don't have enough money"
     end
-    it 'deduct money from the card' do
-      oystercard.top_up(Oystercard::MIN)
-      expect{oystercard.deduct(10)}.to change{oystercard.balance}.by(-10)
-    end
 
-    it 'reduces set amount of money when asked' do
-      card = Oystercard.new
-      card.balance = 50
-      expect(card.deduct(5)).to eq 45
-    end
   end
 
   context 'card.in_journey?' do
