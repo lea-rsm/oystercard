@@ -1,9 +1,11 @@
 require 'Oystercard'
+require 'journey'
 
 describe Oystercard do
   subject(:oystercard) { described_class.new }
   let(:station) { double(:station) }
   let(:station2) { double(:station2) }
+  let(:journey) {{entry_station: station, exit_station: station2}}
 
   context 'balance' do
 
@@ -28,11 +30,12 @@ describe Oystercard do
     it {is_expected.to respond_to :in_journey?}
 
     it "saves the journey as a hash inside the journeys array" do
+
     oystercard.top_up(Oystercard::MIN_CHARGE)
     oystercard.touch_in(station)
     oystercard.touch_out(station2)
-    expect(oystercard.journeys).to include({station => station2})
-  end
+    expect(oystercard.journeys).to include journey
+    end
   end
 
   context 'after touch_in' do
@@ -47,7 +50,7 @@ describe Oystercard do
     oystercard.top_up(Oystercard::MIN)
     oystercard.touch_in(station)
     expect(oystercard.entry_station).to eq station
-  end
+    end
   end
 
   context 'after touch_out' do
