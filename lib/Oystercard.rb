@@ -1,3 +1,5 @@
+require './lib/station.rb'
+
 class Oystercard
 
   attr_accessor :balance, :entry_station, :journeys
@@ -7,9 +9,9 @@ class Oystercard
   MIN_CHARGE = 1
 
    def initialize
-     @balance = 0
+     @balance = 0.to_f
      @in_journey = false
-     @entry_station = nil
+
      @journeys = []
    end
 
@@ -31,7 +33,7 @@ class Oystercard
    end
 
    def touch_out(station)
-     @journeys << {@entry_station => station}
+     @journeys << {entry_station: @entry_station, exit_station: station}
      @entry_station = nil
      deduct(MIN_CHARGE)
    end
