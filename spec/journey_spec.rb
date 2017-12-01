@@ -3,7 +3,10 @@ require 'Oystercard'
 require 'station'
 
 describe Journey do
-  let(:oystercard) {double(:oystercard, balance: 60, journeys: [])}
+  # let(:oystercard) {double(:oystercard, balance: 60, journeys: [], history: [])}
+  let(:oystercard) {Oystercard.new}
+  let(:station) { double(:station) }
+  let(:station2) { double(:station2) }
 
   it "initializes with entry station as no station as default" do
     new_journey = Journey.new
@@ -44,4 +47,12 @@ describe Journey do
     new_journey = Journey.new("Euston", nil)
     expect(new_journey).not_to be_complete
   end
+  it 'charges penalty when journey is not complete' do
+    new_journey = Journey.new("Euston", nil)
+    oystercard.top_up(50)
+    oystercard.touch_in(station)
+    expect(new_journey.fare).to eq(Journey::PENALTY)
+
+  end
+
 end

@@ -1,11 +1,13 @@
 require 'Oystercard'
 require 'journey'
 
+
 describe Oystercard do
   subject(:oystercard) { described_class.new }
   let(:station) { double(:station) }
   let(:station2) { double(:station2) }
   let(:journey) {{entry_station: station, exit_station: station2}}
+  let(:journey2) {Journey.new}
 
   context 'balance' do
 
@@ -51,18 +53,22 @@ describe Oystercard do
     oystercard.touch_in(station)
     expect(oystercard.entry_station).to eq station
     end
+
+
   end
 
   context 'after touch_out' do
 
     it 'the card should not be in journey' do
+      oystercard.top_up(50)
+      oystercard.touch_in(station)
       oystercard.touch_out(station2)
-      expect(oystercard).not_to be_in_journey
+      expect(oystercard.in_journey?).to eq false
     end
 
     it 'deduct money from card' do
       oystercard.top_up(Oystercard::MIN)
-      expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-Oystercard::MIN_CHARGE)
+      expect{oystercard.touch_out(station2)}.to change{oystercard.balance}.by(-journey2.fare)
     end
 
   end
